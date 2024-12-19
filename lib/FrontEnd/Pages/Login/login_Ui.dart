@@ -6,15 +6,24 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../../../BackEnd/Navigation/navigation.dart';
-
-//NEED TO ADD MORE...
+// ----------------------------DONE--------------------------------------------------------------------
 //1. NEED TO MAKE THE ALL TEXT FIELD AS  WHEN CLICKED OUTSIDE IT SHOULD GET UNFOCUSED.
 //2. NEED TO MAKE THE PASSWORD TEXT FIELD AS OBSECURE AND THE ICON SHOULD CHANGE ACCORDING TO IT.
 //3. NEED TO MAKE THE LOGIN BUTTON AS A REUSABLE WIDGET.
 //4. NEED TO MAKE THE TEXT FIELD AS A REUSABLE WIDGET.
 //5. WHEN THE USER CLICKS THE FORGET PASSWORD TEXT IT SHOULD NAVIGATE TO THE FORGET PASSWORD PAGE.
-//6. WHEN THE USER CLICKS THE LOGIN BUTTON IT SHOULD NAVIGATE TO THE HOME PAGE AS WELL AS SHOW A LOADING DIALOG.
 //7. WHEN THE USER CLICKS THE ABOVE LEFT ARROW IT SHOULD NAVIGATE BACK TO THE WELCOME PAGE.
+//10. REPLACE THE SETSTATE METHOD BY VALUENOTIFIER FOR PERFORMANCE IN ForgotPassword PAGE...
+//NEED TO ADD MORE...
+//8. NEED TO MAKE A HOMEPAGE.
+//6. WHEN THE USER CLICKS THE LOGIN BUTTON IT SHOULD NAVIGATE TO THE HOME PAGE AS WELL AS SHOW A LOADING DIALOG.
+//9. NEED TO ADD LOGIN WITH FIREBASE AUTH SERVICES..
+
+
+
+
+
+
 
 
 class Login extends StatefulWidget {
@@ -29,8 +38,7 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: const Color(0xFF000000),
+
 
           body: Stack(
               children: [
@@ -65,7 +73,8 @@ class _LoginState extends State<Login> {
                                   alignment: const Alignment(0.5, 0),
                                   padding: WidgetStateProperty.all(EdgeInsets.zero),
                                 ),
-                                icon: const Icon(Icons.arrow_back_ios,
+                                icon: const Icon(
+                                  Icons.arrow_back_ios,
                                   size: 25,
                                   color: Colors.white,
                                 ),
@@ -95,7 +104,8 @@ class _LoginState extends State<Login> {
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 30,
-                                      fontWeight: FontWeight.bold),
+                                      fontWeight: FontWeight.bold
+                                  ),
                                 ),
 
                                 const SizedBox(height: 70,),

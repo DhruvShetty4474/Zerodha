@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "393981252818",
+    "project_id": "zerodhaclone-69c64",
+    "storage_bucket": "zerodhaclone-69c64.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:393981252818:android:88e4c96692403ce5fac90b",
+        "android_client_info": {
+          "package_name": "com.example.kite"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAB-sXTuCZyfm8B0ifWBc9H8Q3umWwE8XA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

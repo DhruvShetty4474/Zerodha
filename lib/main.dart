@@ -1,9 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'BackEnd/Navigation/navigation.dart';
 import 'FrontEnd/Pages/Welcome/Welcome.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -21,7 +27,7 @@ class MyApp extends StatelessWidget {
       ),
       navigatorKey: NavigationServices.navigatorKey, // Set the global navigator key
       routes: NavigationServices.routes, // Set the global routes
-      initialRoute: '/', // Set the initial route
+      initialRoute: '/home', // Set the initial route
     );
   }
 }

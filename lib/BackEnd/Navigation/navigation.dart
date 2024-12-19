@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
+
 // Ui Pages Imports....
 import 'package:kite/FrontEnd/Pages/Welcome/Welcome.dart';
 import '../../FrontEnd/Pages/Forget_Password/forget_Password_Ui.dart';
 import '../../FrontEnd/Pages/Login/login_Ui.dart';
 import '../../FrontEnd/Pages/Register/register_Ui.dart';
+import 'package:kite/FrontEnd/Pages/HOME/home.dart';
+
+
 
 class NavigationServices {
   static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -14,6 +18,7 @@ class NavigationServices {
     '/login': (context) =>   const Login(),
     '/register': (context) =>  const Register(),
     '/forget_password': (context) =>  const ForgetPassword(),
+    '/home': (context) =>  const Home(),
   };
 
   /// Navigate to a new route
