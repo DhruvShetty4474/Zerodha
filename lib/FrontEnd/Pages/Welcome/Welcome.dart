@@ -2,8 +2,11 @@ import 'dart:developer';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:kite/BackEnd/Navigation/navigation.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:floating_animation/floating_animation.dart';
+
+import '../Login/login_Ui.dart';
 
 
 //NEED TO ADD MORE...
@@ -106,7 +109,8 @@ class _WelcomeState extends State<Welcome> {
                             ),
                             onPressed: (){
                               log('Open a free account');
-                              Navigator.pushNamed(context, '/register');
+                              // Navigator.pushNamed(context, '/register');
+                              NavigationServices().navigateTo('/register');
                             },
                             child:  Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -159,7 +163,7 @@ class _WelcomeState extends State<Welcome> {
                             ),
                             onPressed: (){
                               log('Login to Kite');
-                              Navigator.pushNamed(context, '/login');
+                              NavigationServices().navigateTo('/login');
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,

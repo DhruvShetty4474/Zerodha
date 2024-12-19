@@ -5,6 +5,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
+import '../../../BackEnd/Navigation/navigation.dart';
+
 
 
 //NEED TO ADD  MORE ...
@@ -15,14 +17,14 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 
 
 
-class ZerodhaRegister extends StatefulWidget {
-  const ZerodhaRegister({super.key});
+class Register extends StatefulWidget {
+  const Register({super.key});
 
   @override
-  State<ZerodhaRegister> createState() => _ZerodhaRegisterState();
+  State<Register> createState() => _RegisterState();
 }
 
-class _ZerodhaRegisterState extends State<ZerodhaRegister> {
+class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -55,7 +57,7 @@ class _ZerodhaRegisterState extends State<ZerodhaRegister> {
                               IconButton(
                                 onPressed: (){
                                   log('back pressed');
-                                  Navigator.pop(context);
+                                  NavigationServices().navigateAndRemoveUntil('/');
                                 },
                                 style: ButtonStyle(
                                   padding: WidgetStateProperty.all(EdgeInsets.zero),

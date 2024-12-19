@@ -1,9 +1,11 @@
 
 import 'package:flutter/material.dart';
 
-
 //has the logic for icon to be shown or not
-import 'logic.dart';
+import '../../BackEnd/Logic/ReuseableComponets/TextField.dart';
+
+
+
 
 class ReusableTextField extends StatelessWidget {
 
@@ -16,6 +18,7 @@ class ReusableTextField extends StatelessWidget {
     this.validator,
     this.keyboardType,
     this.needIcon = false,
+    this.labelTextStyle
   });
 
   //To Define the controller of the text field...
@@ -29,6 +32,8 @@ class ReusableTextField extends StatelessWidget {
   final Icon? icon;
   //To Define if the text field need to be obsecure or not...
   final bool obscureText;
+  //To Define the style of the label text...
+  final TextStyle? labelTextStyle;
   //To Define the validator of the text field...
   final String? Function(String?)? validator;
   //To Define the keyboard type of the text field...
@@ -43,10 +48,11 @@ class ReusableTextField extends StatelessWidget {
       decoration: InputDecoration(
         // contentPadding: const EdgeInsets.symmetric(vertical: 20),
         labelText: labelText,
-        labelStyle: TextStyle(
-          color: Colors.grey[400],
-          fontSize: 25,
-        ),
+        labelStyle: labelTextStyle,
+        // labelStyle: TextStyle(
+        //   color: Colors.grey[400],
+        //   fontSize: 25,
+        // ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.grey[850]!),
           // borderRadius: BorderRadius.circular(10),

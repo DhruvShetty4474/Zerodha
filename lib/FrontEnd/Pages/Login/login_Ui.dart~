@@ -5,8 +5,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-
-
+import '../../../BackEnd/Navigation/navigation.dart';
 
 //NEED TO ADD MORE...
 //1. NEED TO MAKE THE ALL TEXT FIELD AS  WHEN CLICKED OUTSIDE IT SHOULD GET UNFOCUSED.
@@ -16,7 +15,6 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 //5. WHEN THE USER CLICKS THE FORGET PASSWORD TEXT IT SHOULD NAVIGATE TO THE FORGET PASSWORD PAGE.
 //6. WHEN THE USER CLICKS THE LOGIN BUTTON IT SHOULD NAVIGATE TO THE HOME PAGE AS WELL AS SHOW A LOADING DIALOG.
 //7. WHEN THE USER CLICKS THE ABOVE LEFT ARROW IT SHOULD NAVIGATE BACK TO THE WELCOME PAGE.
-
 
 
 class Login extends StatefulWidget {
@@ -45,26 +43,33 @@ class _LoginState extends State<Login> {
                   shapeColors: {"circle": Color(0xFFB71C1C)},
                   spawnRate: 100, // Adjust spawn rate as needed
                 ),
-                SingleChildScrollView(
+                SingleChildScrollView (
                   child: SizedBox(
-                    height: 900,
+                    height: MediaQuery.of(context).size.height,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         //Add a back button and the logo of Zerodha...
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               //Back button
                               IconButton(
-                                  onPressed: (){
-                                    log('back pressed');
-                                  },
-                                  icon: const Icon(Icons.arrow_back_ios,
-                                    size: 25,
-                                    color: Colors.white,)
+                                onPressed: (){
+                                  log('back pressed');
+                                  // NavigationServices().goBack();
+                                  NavigationServices().navigateAndRemoveUntil('/');
+                                },
+                                style: ButtonStyle(
+                                  alignment: const Alignment(0.5, 0),
+                                  padding: WidgetStateProperty.all(EdgeInsets.zero),
+                                ),
+                                icon: const Icon(Icons.arrow_back_ios,
+                                  size: 25,
+                                  color: Colors.white,
+                                ),
                               ),
 
                               const Spacer(),
@@ -79,7 +84,7 @@ class _LoginState extends State<Login> {
 
                         // Add the login user-interface here...
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 30),
+                          padding: const EdgeInsets.symmetric(horizontal: 26),
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -168,7 +173,9 @@ class _LoginState extends State<Login> {
                                 Align(
                                   alignment: Alignment.bottomRight,
                                   child: GestureDetector(
-                                    onTap: (){},
+                                    onTap: (){
+                                      NavigationServices().navigateTo('/forget_password');
+                                    },
                                     child: const Text(
                                       'Forget user ID or password?',
                                       style: TextStyle(

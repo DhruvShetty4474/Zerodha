@@ -5,6 +5,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
+import '../../../BackEnd/Navigation/navigation.dart';
+
 //NEED TO ADD MORE...
 //1. NEED TO MAKE THE ALL TEXT FIELD AS  WHEN CLICKED OUTSIDE IT SHOULD GET UNFOCUSED.
 //2. NEED TO MAKE THE PASSWORD TEXT FIELD AS OBSECURE AND THE ICON SHOULD CHANGE ACCORDING TO IT.
@@ -15,14 +17,14 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 //7. WHEN THE USER CLICKS THE ABOVE LEFT ARROW IT SHOULD NAVIGATE BACK TO THE WELCOME PAGE.
 
 
-class ZerodhaLogin extends StatefulWidget {
-  const ZerodhaLogin({super.key});
+class Login extends StatefulWidget {
+  const Login({super.key});
 
   @override
-  State<ZerodhaLogin> createState() => _ZerodhaLoginState();
+  State<Login> createState() => _LoginState();
 }
 
-class _ZerodhaLoginState extends State<ZerodhaLogin> {
+class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -57,7 +59,7 @@ class _ZerodhaLoginState extends State<ZerodhaLogin> {
                               IconButton(
                                 onPressed: (){
                                   log('back pressed');
-                                  Navigator.pop(context);
+                                  NavigationServices().navigateAndRemoveUntil('/');
                                 },
                                 style: ButtonStyle(
                                   alignment: const Alignment(0.5, 0),
@@ -170,7 +172,9 @@ class _ZerodhaLoginState extends State<ZerodhaLogin> {
                                 Align(
                                   alignment: Alignment.bottomRight,
                                   child: GestureDetector(
-                                    onTap: (){},
+                                    onTap: (){
+                                      NavigationServices().navigateTo('/forget_password');
+                                    },
                                     child: const Text(
                                       'Forget user ID or password?',
                                       style: TextStyle(

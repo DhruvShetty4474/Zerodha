@@ -3,20 +3,28 @@ import 'dart:developer';
 import 'package:floating_animation/floating_animation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+
+import '../../../BackEnd/Navigation/navigation.dart';
 
 
 
-//NEED TO MAKE THE REGISTER PAGE.....AFTER ADDING ALL THE FUNCTION WITH THE API FOR LOGIN SCREEN.
+//NEED TO ADD  MORE ...
+//1. NEED TO MAKE THE ALL TEXT FIELD AS  WHEN CLICKED OUTSIDE IT SHOULD GET UNFOCUSED.
+//2. NEED TO ADD THE LINK TO THE TERMS & CONDITIONS TEXT TO REDIRECT..
+//3. NEED TO MAKE THE CONTINUE BUTTON WORK AS WHEN CLICKED IT SHOULD CHECK WITH FIREBASE...
 
 
-class ZerodhaRegister extends StatefulWidget {
-  const ZerodhaRegister({super.key});
+
+
+class Register extends StatefulWidget {
+  const Register({super.key});
 
   @override
-  State<ZerodhaRegister> createState() => _ZerodhaRegisterState();
+  State<Register> createState() => _RegisterState();
 }
 
-class _ZerodhaRegisterState extends State<ZerodhaRegister> {
+class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -49,6 +57,7 @@ class _ZerodhaRegisterState extends State<ZerodhaRegister> {
                               IconButton(
                                 onPressed: (){
                                   log('back pressed');
+                                  NavigationServices().goBack();
                                 },
                                 style: ButtonStyle(
                                   padding: WidgetStateProperty.all(EdgeInsets.zero),

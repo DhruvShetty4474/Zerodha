@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'BackEnd/Navigation/navigation.dart';
 import 'FrontEnd/Pages/Welcome/Welcome.dart';
 
 void main() {
@@ -18,7 +19,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Welcome(),
+      navigatorKey: NavigationServices.navigatorKey, // Set the global navigator key
+      routes: NavigationServices.routes, // Set the global routes
+      initialRoute: '/', // Set the initial route
     );
   }
 }
