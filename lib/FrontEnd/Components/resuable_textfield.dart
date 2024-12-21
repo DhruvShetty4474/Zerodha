@@ -11,7 +11,7 @@ class ReusableTextField extends StatelessWidget {
 
   const ReusableTextField({
     super.key,
-    // this.controller,
+    this.controller,
     this.labelText = 'hello',
     this.icon,
     this.obscureText = false,
@@ -22,7 +22,7 @@ class ReusableTextField extends StatelessWidget {
   });
 
   //To Define the controller of the text field...
-  // final TextEditingController controller;
+  final TextEditingController? controller;
 
   //Need label Text to define which text field is it...
   final String labelText;
@@ -42,6 +42,11 @@ class ReusableTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
+      style:  TextStyle(
+        color: Colors.white,
+        fontSize: 20,
+      ),
       obscureText: obscureText,
       keyboardType: keyboardType,
       cursorColor: Colors.blue,

@@ -68,6 +68,7 @@ flutter:
   assets:
     - assets/zerodha-kite-logo.png
     - assets/kite_Registration_image.png
+    - assets/otp.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

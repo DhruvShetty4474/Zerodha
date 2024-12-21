@@ -113,7 +113,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
 
                           //Forget userID or Password text....
                           const Text(
-                            "Forgot user ID or password?",
+                            "Forgot Email ID or password?",
                             style: TextStyle(
                               fontSize: 26.4,
                               fontWeight: FontWeight.bold,
@@ -125,7 +125,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
 
                           //Custom radio button with text i remember my user ID
                           ListTile(
-                            title: const Text('I remember my user ID',),
+                            title: const Text('I remember my Email ID',),
                             titleTextStyle: const TextStyle(
                               fontSize: 18,
                               // fontWeight: FontWeight.bold,
@@ -151,7 +151,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                           ),
                           //Custom radio button with text i forgot my user ID
                           ListTile(
-                            title: const Text('I forgot my user ID',),
+                            title: const Text('I forgot my Email ID',),
                             titleTextStyle: const TextStyle(
                               fontSize: 18,
                               // fontWeight: FontWeight.bold,
@@ -182,7 +182,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                           if(_radioButtonState.value.shouldShowUserIdField())
                           // A Text Field where the user will provide there user id..
                             ReusableTextField(
-                              labelText: 'User ID',
+                              labelText: 'Email ID',
                               labelTextStyle: TextStyle(
                                 color: Colors.grey[400],
                                 fontSize: 25,

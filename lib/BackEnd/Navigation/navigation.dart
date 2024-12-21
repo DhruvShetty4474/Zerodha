@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:kite/FrontEnd/Pages/Welcome/Welcome.dart';
 import '../../FrontEnd/Pages/Forget_Password/forget_Password_Ui.dart';
 import '../../FrontEnd/Pages/Login/login_Ui.dart';
+import '../../FrontEnd/Pages/Register/OTP/otp.dart';
 import '../../FrontEnd/Pages/Register/register_Ui.dart';
 import 'package:kite/FrontEnd/Pages/HOME/home.dart';
 
@@ -19,6 +20,7 @@ class NavigationServices {
     '/register': (context) =>  const Register(),
     '/forget_password': (context) =>  const ForgetPassword(),
     '/home': (context) =>  const Home(),
+    // '/otp': (context) =>  Otp(verificationId: ModalRoute.of(context)!.settings.arguments as String),
   };
 
   /// Navigate to a new route

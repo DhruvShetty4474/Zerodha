@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       ),
       navigatorKey: NavigationServices.navigatorKey, // Set the global navigator key
       routes: NavigationServices.routes, // Set the global routes
-      initialRoute: '/home', // Set the initial route
+      initialRoute: '/', // Set the initial route
     );
   }
 }

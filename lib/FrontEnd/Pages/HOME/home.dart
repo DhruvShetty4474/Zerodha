@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../BackEnd/Navigation/navigation.dart';
+import 'logic.dart';
 
 ///Need MORE...
 ///1. NEED TO ADD MORE COMPONENTS IN THE HOMEPAGE TO LOOK ALIKE ZERODHA HOMEPAGE..
@@ -41,7 +42,8 @@ class _HomeState extends State<Home> {
                           //Back button
                           IconButton(
                             onPressed: () {
-                              NavigationServices().navigateAndRemoveUntil('/home');
+                              NavigationServices().navigateAndRemoveUntil('/');
+                              signOut();
                             },
                             icon: const Icon(
                               Icons.arrow_back_ios,
