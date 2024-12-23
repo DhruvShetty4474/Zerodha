@@ -14,7 +14,7 @@ class LoginAuth {
           password: password
       );
       log("Signed in: ${userCredential.user?.email}");
-      NavigationServices().navigateAndRemoveUntil('/home');
+      NavigationServices().navigateAndRemoveUntil('/navigationbar_page');
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
       // Log specific error messages based on the Firebase error codes

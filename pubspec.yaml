@@ -41,6 +41,7 @@ dependencies:
   firebase_auth: ^5.3.4
   material_design_icons_flutter: 7.0.7296
   floating_animation: ^1.0.7
+  iconsax: ^0.0.8
 
 dev_dependencies:
   flutter_test:
