@@ -6,46 +6,78 @@ import 'package:flutter/material.dart';
 import '../../../FrontEnd/Pages/Register/OTP/otp.dart';
 import '../../Navigation/navigation.dart';
 
-//Phone authentication part not working due to billing should be enabled
+///Phone Authentication is working without enabling the billing option for that we need to add a
+/// dummy phone number in the phone number for testing option and as well as the otp( need to
+/// remember the otp for login/register) as in testing
+/// it can not send the otp through sms and will work both on the emulator and on the real phone.
+///
+/// To enable the OTP to receive on sms we need to enable SHA-1 and SHA-256 keys in your project settings
+/// ( you can do that by following the steps in "https://docs.fluxbuilder.com/sha-1-and-sha-256/").
+/// You can only receive OTP in SMS on your real device not in the emulator.
+///
+/// The Login and Register has the same logic.
 class RegisterationPhoneAuth {
-
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  void registerPhoneNumber( BuildContext context, TextEditingController phoneController) async {
+  /// Initiates phone number verification.
+  Future<void> registerPhoneNumber(
+      BuildContext context, TextEditingController phoneController) async {
+    final String phoneNumber = "+91" + phoneController.text.trim();
+
     await _auth.verifyPhoneNumber(
-      phoneNumber: "+91"+phoneController.text,
-      verificationCompleted: (PhoneAuthCredential credential) {},
+      phoneNumber: phoneNumber,
+      verificationCompleted: (PhoneAuthCredential credential) {
+        debugPrint('Auto-retrieved verification completed.');
+      },
       verificationFailed: (FirebaseAuthException e) {
-        debugPrint('Verification failed: ${e.message}');
+        debugPrint('Phone number verification failed: ${e.message}');
       },
       codeSent: (String verificationId, int? forceResendingToken) {
+        /// Navigate to the OTP screen and pass the verificationId.
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => Otp(verificationId: verificationId),
           ),
         );
-
       },
-      codeAutoRetrievalTimeout: (String verificationId) {},
+      codeAutoRetrievalTimeout: (String verificationId) {
+        debugPrint('Code auto-retrieval timed out for verification ID: $verificationId');
+      },
     );
   }
 
-  void otpVerification(String verificationId, String otp) async {
+  /// Verifies the OTP entered by the user.
+  Future<void> otpVerification(String verificationId, String otp) async {
+    if (otp.trim().isEmpty) {
+      log('OTP is empty. Please enter a valid OTP.');
+      return;
+    }
+
     try {
-      if (otp.isEmpty) {
-        return log('OTP is empty');
-      }
-      PhoneAuthCredential credential = PhoneAuthProvider.credential(
-          verificationId: verificationId, smsCode: otp);
+      final PhoneAuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: verificationId,
+        smsCode: otp,
+      );
+      ///This is the part where you can change the logic for login and register
+      ///like if you are using this for registration and if the credentials are correct
+      ///you can navigate to the login page.
+      ///and same in login you can navigate it to your home page...
+      ///just hy changing the route..
+      ///here NavigationServices().navigateAndRemoveUntil('/home'); is my own custom function.
+      ///you can use Navigator.push(), Navigator.pushReplacement() or Navigator.pushAndRemoveUntil()..
       await _auth.signInWithCredential(credential).then((value) {
+        /// Navigate based on login or registration logic.
+        /// Example for successful login/registration:
         NavigationServices().navigateAndRemoveUntil('/home');
       });
-    }catch(e){
-      log(e.toString());
+    } catch (e) {
+      log('OTP verification failed: ${e.toString()}');
     }
   }
 }
+
+
 
 
 
@@ -72,6 +104,7 @@ class RegisterationAuth {
         case 'email-already-in-use':
           print('The email address is already in use.');
           break;
+
         case 'weak-password':
           print('The provided password is too weak.');
           break;

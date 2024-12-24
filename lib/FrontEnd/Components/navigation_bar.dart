@@ -43,6 +43,8 @@ class _Navigation_BarState extends State<Navigation_Bar> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return SafeArea(
       child: ValueListenableBuilder<int>(
         valueListenable: currentIndex,
@@ -70,25 +72,25 @@ class _Navigation_BarState extends State<Navigation_Bar> {
                     currentIndex.value = index;
                     log(index.toString());
                   },
-                  destinations: const [
+                  destinations: [
                     NavigationDestination(
-                      icon: Icon(Icons.bookmark_outline),
+                      icon: Icon(Icons.bookmark_outline, size: height * 0.03),
                       label: 'Watchlist',
                     ),
                     NavigationDestination(
-                      icon: Icon(Iconsax.book, size: 25),
+                      icon: Icon(Iconsax.book, size: height * 0.03),
                       label: 'Orders',
                     ),
                     NavigationDestination(
-                      icon: Icon(Iconsax.briefcase),
+                      icon: Icon(Iconsax.briefcase, size: height * 0.03),
                       label: 'Portfolio',
                     ),
                     NavigationDestination(
-                      icon: Icon(Icons.gavel),
+                      icon: Icon(Icons.gavel, size: height * 0.03),
                       label: 'Bids',
                     ),
                     NavigationDestination(
-                      icon: Icon(Iconsax.user),
+                      icon: Icon(Iconsax.user, size: height * 0.03),
                       label: 'Profile',
                     ),
                   ],
