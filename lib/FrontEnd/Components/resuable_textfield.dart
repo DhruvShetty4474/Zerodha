@@ -12,13 +12,15 @@ class ReusableTextField extends StatelessWidget {
   const ReusableTextField({
     super.key,
     this.controller,
-    this.labelText = 'hello',
+    required this.labelText,
     this.icon,
     this.obscureText = false,
     this.validator,
     this.keyboardType,
     this.needIcon = false,
-    this.labelTextStyle
+    this.labelTextStyle,
+    this.needPrefixIcon = false,
+    this.prefixIcon,
   });
 
   //To Define the controller of the text field...
@@ -26,7 +28,7 @@ class ReusableTextField extends StatelessWidget {
 
   //Need label Text to define which text field is it...
   final String labelText;
-  //To Define if the text field need an icon or not...
+  //To Define if the text field need an suffix icon or not...
   final bool needIcon;
   //To Take an Icon Data...
   final Icon? icon;
@@ -38,6 +40,12 @@ class ReusableTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   //To Define the keyboard type of the text field...
   final TextInputType? keyboardType;
+
+  //To Define if the text field need a prefix icon or not...
+  final bool needPrefixIcon;
+  //To Take an Icon Data...
+  final Icon? prefixIcon;
+
 
   @override
   Widget build(BuildContext context) {
