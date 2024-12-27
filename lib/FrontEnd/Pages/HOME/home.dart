@@ -9,7 +9,9 @@ import 'components.dart';
 import 'logic.dart';
 
 ///Need MORE...
-///1. NEED TO ADD MORE COMPONENTS IN THE HOMEPAGE TO LOOK ALIKE ZERODHA HOMEPAGE..
+///1. Have to think how to set the stock list items in a data base/json file or just like now..
+///2. need to work more on the Tab bar change and animation.
+///3. need to add more pages like ORDER, PORTFOLIO, Bids, Profile...
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -20,8 +22,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with TickerProviderStateMixin {
   final ValueNotifier<int> _selectedIndex = ValueNotifier<int>(0);
-
-
 
   @override
   void dispose() {
@@ -39,8 +39,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     final searchBarHeight = height * 0.065; // Your search bar height
 
     // Calculate available height for list items
-    final availableHeight = height - appBarHeight - bottomNavHeight - searchBarHeight;
-    final itemHeight = availableHeight / 7.5; // Divide by 6 to fit exactly 6 items
+    final availableHeight =
+        height - appBarHeight - bottomNavHeight - searchBarHeight;
+    final itemHeight =
+        availableHeight / 7.5; // Divide by 6 to fit exactly 6 items
 
     return SafeArea(
       child: Scaffold(
@@ -148,12 +150,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           },
           body: Column(
             children: [
-              /// NEED TO ADD MORE CONTENT FOR THE HOMEPAGE TO LOOK LIKE ZERODHA HOMEPAGE..
-              /// 1. need to add textbutton or add greature recognizer to the text widget so when
-              /// clicked it should open a widget from below...
               Expanded(
                 child: ListView.builder(
-                  itemCount: stockData.length + 1, // +1 for search bar
+                  itemCount: favoritesStocks.length + 1, // +1 for search bar
                   itemBuilder: (context, index) {
                     if (index == 0) {
                       // Return the search bar widget as the first item
@@ -161,7 +160,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 16, vertical: 12),
                         child: Container(
-                          height: MediaQuery.of(context).size.height * 0.065,
+                          height: height * 0.065,
                           decoration: BoxDecoration(
                             color: Colors.grey[900],
                             borderRadius: BorderRadius.circular(5),
@@ -169,25 +168,48 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.05,
-                              ),
-                              Icon(Iconsax.search_normal_14,
-                                  color: Colors.grey[400],
-                                  size: MediaQuery.of(context).size.height *
-                                      0.0255),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.05,
-                              ),
-                              Text(
-                                'Search & add',
-                                style: TextStyle(
-                                  color: Colors.grey[400],
-                                  fontSize: MediaQuery.of(context).size.height *
-                                      0.020,
+                              // Expanded widget wraps the clickable area
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    NavigationServices().navigateTo('/search');
+                                    print('Search area clicked');
+                                  },
+                                  // Using Material for better touch feedback
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: width *
+                                              0.05,
+                                        ),
+                                        Icon(
+                                          Iconsax.search_normal_14,
+                                          color: Colors.grey[400],
+                                          size: height *
+                                              0.0255,
+                                        ),
+                                        SizedBox(
+                                          width: width *
+                                              0.05,
+                                        ),
+                                        Text(
+                                          'Search & add',
+                                          style: TextStyle(
+                                            color: Colors.grey[400],
+                                            fontSize: height *
+                                                0.020,
+                                          ),
+                                        ),
+                                        // Spacer is now inside the clickable area
+                                        const Spacer(),
+                                      ],
+                                    ),
+                                  ),
                                 ),
                               ),
-                              const Spacer(),
+                              // Divider and IconButton remain separate
                               VerticalDivider(
                                 color: Colors.grey[800],
                                 thickness: 1.0,
@@ -196,11 +218,13 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                 width: 1.0,
                               ),
                               IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  print('IconButton clicked');
+                                },
                                 icon: Icon(
                                   MdiIcons.tuneVertical,
                                   color: Colors.white,
-                                  size: MediaQuery.of(context).size.height *
+                                  size: height *
                                       0.0255,
                                 ),
                               ),
@@ -233,7 +257,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       //     ),
                       //   ],
                       // );
-                      final stock = stockData[index - 1];
+                      final stock = favoritesStocks[index - 1];
                       return StockListItem(
                         stockName: stock['name'],
                         exchange: stock['exchange'],

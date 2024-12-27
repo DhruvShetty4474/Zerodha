@@ -1,5 +1,12 @@
 
 
+final List<String> SerachBarOptions = [
+  '#',
+  'ETF',
+  'MF',
+  'IPO',
+  'G-Sec',
+];
 
 //List of menu options
 final List<String> menuOptions = [
@@ -63,5 +70,50 @@ final List<Map<String, dynamic>> stockData = [
     'priceChange': 4.70,
     'priceChangePercentage': 0.63,
   },
+  {
+    'name': 'TATASTEEL',
+    'exchange': 'NSE',
+    'price': 138.91,
+    'priceChange': -1.45,
+    'priceChangePercentage': -1.03,
+  },
+  {
+    'name': 'TATATECH',
+    'exchange': 'NSE',
+    'price': 898.85,
+    'priceChange': -1.65,
+    'priceChangePercentage': -0.18,
+  },
+  {
+    'name': 'WIPRO',
+    'exchange': 'NSE',
+    'price': 309.10,
+    'priceChange': 4.05,
+    'priceChangePercentage': 1.32,
+  },
+  {
+    'name': 'BANKBARODA',
+    'exchange': 'NSE',
+    'price': 244.99,
+    'priceChange': -1.69,
+    'priceChangePercentage': -0.68,
+  },
+  {
+    'name': 'KOTAKBANK',
+    'exchange': 'NSE',
+    'price': 1759.90,
+    'priceChange': 7.10,
+    'priceChangePercentage': 0.40,
+  },
   // Add more stocks as needed
 ];
+
+
+List<Map<String, dynamic>> AddingFavoraitesStocksList(List<String> names) {
+  return stockData.where((stock) => names.contains(stock['name'])).toList();
+}
+
+final List<String> favoriteNames = ['GOLDBEES', 'HDFCBANK', 'TCS'];
+
+final List<Map<String, dynamic>> favoritesStocks = AddingFavoraitesStocksList(favoriteNames);
+

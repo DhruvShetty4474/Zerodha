@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:kite/FrontEnd/Pages/Welcome/Welcome.dart';
 import '../../FrontEnd/Components/navigation_bar.dart';
 import '../../FrontEnd/Pages/Forget_Password/forget_Password_Ui.dart';
+import '../../FrontEnd/Pages/HOME/Search_UI/search_ui.dart';
 import '../../FrontEnd/Pages/Login/login_Ui.dart';
 import '../../FrontEnd/Pages/Register/OTP/otp.dart';
 import '../../FrontEnd/Pages/Register/register_Ui.dart';
@@ -23,6 +24,7 @@ class NavigationServices {
     '/home': (context) =>  const Home(),
     '/navigationbar_page': (context) =>  const Navigation_Bar(),
     // '/otp': (context) =>  Otp(verificationId: ModalRoute.of(context)!.settings.arguments as String),
+    '/search': (context) =>  const SearchUi(),
   };
 
   /// Navigate to a new route
