@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
+import '../../../BackEnd/Models/home_model.dart';
 import '../../../BackEnd/Navigation/navigation.dart';
 import '../../Components/resuable_textfield.dart';
+import 'components.dart';
 import 'logic.dart';
 
 ///Need MORE...
@@ -16,15 +18,10 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with TickerProviderStateMixin {
+  final ValueNotifier<int> _selectedIndex = ValueNotifier<int>(0);
 
-  late ValueNotifier<int> _selectedIndex = ValueNotifier<int>(0);
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _selectedIndex = ValueNotifier<int>(0);
-  // }
 
   @override
   void dispose() {
@@ -32,21 +29,19 @@ class _HomeState extends State<Home> {
     super.dispose();
   }
 
-
-  final List<String> menuOptions = [
-    'Favorites',
-    'My list',
-    'Must watch',
-    'Random',
-    'More',
-    'Trending',
-    'Top picks',
-  ];
-
   @override
   Widget build(BuildContext context) {
-    double _height = MediaQuery.of(context).size.height;
-    double _width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
+    final appBarHeight = const SliverAppBar().toolbarHeight;
+    const bottomNavHeight = kBottomNavigationBarHeight;
+    final searchBarHeight = height * 0.065; // Your search bar height
+
+    // Calculate available height for list items
+    final availableHeight = height - appBarHeight - bottomNavHeight - searchBarHeight;
+    final itemHeight = availableHeight / 7.5; // Divide by 6 to fit exactly 6 items
+
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -60,7 +55,7 @@ class _HomeState extends State<Home> {
                   'Watchlist',
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: _height * 0.035,
+                      fontSize: height * 0.035,
                       fontWeight: FontWeight.bold),
                 ),
                 actions: [
@@ -69,7 +64,7 @@ class _HomeState extends State<Home> {
                     icon: Icon(
                       Icons.keyboard_arrow_down_outlined,
                       color: Colors.grey[400],
-                      size: _height * 0.05,
+                      size: height * 0.05,
                     ),
                     onPressed: () {},
                   ),
@@ -84,23 +79,23 @@ class _HomeState extends State<Home> {
               // List of menu options....
               SliverAppBar(
                 toolbarHeight:
-                    _height * 0.05, //The minimum Height of the SliverAppbar
+                    height * 0.05, //The minimum Height of the SliverAppbar
                 automaticallyImplyLeading: false,
-                expandedHeight: _height * 0.05,
-                collapsedHeight: _height * 0.05,
+                expandedHeight: height * 0.05,
+                collapsedHeight: height * 0.05,
                 backgroundColor: const Color(0xFF000000),
                 floating: false,
                 pinned: true,
                 snap: false,
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 flexibleSpace: SizedBox(
-                  height: _height * 0.05, // Fixed height for the bar
+                  height: height * 0.05, // Fixed height for the bar
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: menuOptions.length, // Dynamic menu options
                     itemBuilder: (context, index) {
                       return SizedBox(
-                        width: _width / 4, // Exactly 4 items fit the screen
+                        width: width / 4, // Exactly 4 items fit the screen
                         child: GestureDetector(
                           onTap: () {
                             // Handle click
@@ -111,7 +106,7 @@ class _HomeState extends State<Home> {
                           child: ValueListenableBuilder<int>(
                               valueListenable: _selectedIndex,
                               builder: (context, value, child) {
-                                return  Center(
+                                return Center(
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -119,19 +114,25 @@ class _HomeState extends State<Home> {
                                         menuOptions[index],
                                         style: TextStyle(
                                           color: value == index
-                                              ? Colors.blue // Change text color when clicked
+                                              ? Colors
+                                                  .blue // Change text color when clicked
                                               : Colors.grey[400],
                                           fontSize: 16.0,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                       // Blue underline when clicked
-                                      if ( value == index)
-                                        Container(
-                                          margin: const EdgeInsets.only(top: 4.0),
-                                          height: 2.0,
-                                          width: 30.0, // Width of the underline
-                                          color: Colors.blue,
+                                      if (value == index)
+                                        AnimatedOpacity(
+                                          opacity: value == index ? 1.0 : 0.0,
+                                          duration:
+                                              const Duration(milliseconds: 300),
+                                          child: Container(
+                                            height: 2.0,
+                                            width:
+                                                30.0, // Width of the underline
+                                            color: Colors.blue,
+                                          ),
                                         ),
                                     ],
                                   ),
@@ -147,17 +148,18 @@ class _HomeState extends State<Home> {
           },
           body: Column(
             children: [
-
+              /// NEED TO ADD MORE CONTENT FOR THE HOMEPAGE TO LOOK LIKE ZERODHA HOMEPAGE..
+              /// 1. need to add textbutton or add greature recognizer to the text widget so when
+              /// clicked it should open a widget from below...
               Expanded(
                 child: ListView.builder(
-                  itemCount:
-                      51, // Total items (50 items + 1 for the search bar widget)
+                  itemCount: stockData.length + 1, // +1 for search bar
                   itemBuilder: (context, index) {
                     if (index == 0) {
                       // Return the search bar widget as the first item
                       return Padding(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 10),
+                            horizontal: 16, vertical: 12),
                         child: Container(
                           height: MediaQuery.of(context).size.height * 0.065,
                           decoration: BoxDecoration(
@@ -207,31 +209,38 @@ class _HomeState extends State<Home> {
                         ),
                       );
                     } else {
-                      // Return the list items
-
-
+                      // Return the list items...
                       ///Need to show a widget from below when list item is clicked...
                       ///every item has its own widget eg when clicked it should change the info
                       ///accordingly....
-                      return Column(
-                        children: [
-                          SizedBox(
-                            height: _height /
-                                9.28, // Exactly 6 items fit the screen
-                            child: ListTile(
-                              title: Text(
-                                'SENSEX ${index - 1}', // Subtract 1 because the header takes index 0
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                            ),
-                          ),
-                          Divider(
-                            height: 1,
-                            thickness: 3,
-                            color: Colors.grey[900],
-                            // color: Colors.white,
-                          ),
-                        ],
+                      // return Column(
+                      //   children: [
+                      //     SizedBox(
+                      //       height: _height /
+                      //           9.28, // Exactly 6 items fit the screen
+                      //       child: ListTile(
+                      //         title: Text(
+                      //           'SENSEX ${index - 1}', // Subtract 1 because the header takes index 0
+                      //           style: const TextStyle(color: Colors.white),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     Divider(
+                      //       height: 1,
+                      //       thickness: 3,
+                      //       color: Colors.grey[900],
+                      //       // color: Colors.white,
+                      //     ),
+                      //   ],
+                      // );
+                      final stock = stockData[index - 1];
+                      return StockListItem(
+                        stockName: stock['name'],
+                        exchange: stock['exchange'],
+                        price: stock['price'],
+                        priceChange: stock['priceChange'],
+                        priceChangePercentage: stock['priceChangePercentage'],
+                        itemHeight: itemHeight,
                       );
                     }
                   },
