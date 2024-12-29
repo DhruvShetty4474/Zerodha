@@ -1,4 +1,5 @@
 
+import 'package:flutter/material.dart';
 
 final List<String> SerachBarOptions = [
   '#',
@@ -19,7 +20,7 @@ final List<String> menuOptions = [
   'Top picks',
 ];
 
-//List of stock data which will be displayed on the home page..
+//List of stock data.....
 final List<Map<String, dynamic>> stockData = [
   {
     'name': 'GOLDBEES',
@@ -109,11 +110,42 @@ final List<Map<String, dynamic>> stockData = [
 ];
 
 
-List<Map<String, dynamic>> AddingFavoraitesStocksList(List<String> names) {
-  return stockData.where((stock) => names.contains(stock['name'])).toList();
+
+// List<Map<String, dynamic>> AddingFavoraitesStocksList(List<String> names) {
+//   return stockData.where((stock) => names.contains(stock['name'])).toList();
+// }
+//
+// final List<String> favoriteNames = ['GOLDBEES', 'HDFCBANK', 'TCS'];
+//
+// final List<Map<String, dynamic>> favoritesStocks = AddingFavoraitesStocksList(favoriteNames);
+
+// List of stock data which gets updated from firestore through Streambuilder,..
+ValueNotifier<List<Stock>> stockNotifier = ValueNotifier<List<Stock>>([]);
+
+// Class to represent StockData...
+class Stock {
+  final String name;
+  final String exchange;
+  final double price;
+  final double priceChange;
+  final double priceChangePercentage;
+
+  Stock({
+    required this.name,
+    required this.exchange,
+    required this.price,
+    required this.priceChange,
+    required this.priceChangePercentage,
+  });
+
+  factory Stock.fromMap(Map<String, dynamic> map) {
+    return Stock(
+      name: map['name'] as String,
+      exchange: map['exchange'] as String,
+      price: (map['price'] as num).toDouble(),
+      priceChange: (map['priceChange'] as num).toDouble(),
+      priceChangePercentage: (map['priceChangePercentage'] as num).toDouble(),
+    );
+  }
 }
-
-final List<String> favoriteNames = ['GOLDBEES', 'HDFCBANK', 'TCS'];
-
-final List<Map<String, dynamic>> favoritesStocks = AddingFavoraitesStocksList(favoriteNames);
 

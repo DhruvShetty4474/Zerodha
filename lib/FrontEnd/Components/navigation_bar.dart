@@ -2,12 +2,17 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:kite/BackEnd/Navigation/navigation.dart';
 import 'package:kite/FrontEnd/Pages/Login/login_Ui.dart';
 import 'package:kite/FrontEnd/Pages/Register/register_Ui.dart';
 
 import '../../BackEnd/Logic/Navigation Bar/navigation_bar.dart';
+import '../Pages/Bids/bids.dart';
 import '../Pages/Forget_Password/forget_Password_Ui.dart';
 import '../Pages/HOME/home.dart';
+import '../Pages/Orders/orders.dart';
+import '../Pages/Portfolio/portfolio.dart';
+import '../Pages/Profile/profile.dart';
 import '../Pages/Welcome/Welcome.dart';
 
 class Navigation_Bar extends StatefulWidget {
@@ -32,13 +37,12 @@ class _Navigation_BarState extends State<Navigation_Bar> {
     super.dispose();
   }
 
-
-  List<Widget> pages = [
-    const Home(),
-    const Login(),
-    const Register(),
-    const Welcome(),
-    const ForgetPassword(),
+  final List<Widget> pages = [
+    Home(),
+    Orders(),
+    Portfolio(),
+    Bids(),
+    Profile(),
   ];
 
   @override

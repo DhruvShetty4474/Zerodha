@@ -1,78 +1,72 @@
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:flutter/material.dart';
+import '../BackEnd/Data/Firestore/StockData.dart';
+import '../BackEnd/Models/home_model.dart'; // Import fetchStockData function
 
-// Define a class to store stock data
-class Stock {
-  final String symbol;
-  final double price;
-  final double priceChange;
-  final double priceChangePercentage;
+class StockDataProvider extends StatefulWidget {
+  final Function(List<Stock>) onDataReady; // Callback for passing data to the parent
 
-  Stock({
-    required this.symbol,
-    required this.price,
-    required this.priceChange,
-    required this.priceChangePercentage,
-  });
+  const StockDataProvider({Key? key, required this.onDataReady}) : super(key: key);
 
-  // Convert the JSON data to Stock object
-  factory Stock.fromJson(Map<String, dynamic> json, String symbol) {
-    return Stock(
-      symbol: symbol,
-      price: json['regularMarketPrice'],
-      priceChange: json['regularMarketChange'],
-      priceChangePercentage: json['regularMarketChangePercent'],
+  @override
+  State<StockDataProvider> createState() => _StockDataProviderState();
+}
+
+class _StockDataProviderState extends State<StockDataProvider> {
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<Stock>>(
+      future: fetchStockData(), // Fetch data from Firestore
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return const Center(child: Text('No stock data available'));
+        }
+
+        // Invoke the callback with the fetched data
+        widget.onDataReady(snapshot.data!);
+
+        // Return an empty container since UI rendering will happen elsewhere
+        return const SizedBox.shrink();
+      },
     );
   }
 }
 
-Future<List<Stock>> fetchStockData(List<String> symbols) async {
-  final String baseUrl = 'https://query1.finance.yahoo.com/v7/finance/quote';
-  List<Stock> stockList = [];
 
-  try {
-    // Loop over the list of symbols
-    for (String symbol in symbols) {
-      final String url = '$baseUrl?symbols=$symbol';
+class StockDataRealTime extends StatefulWidget {
+  const StockDataRealTime({super.key});
 
-      // Send GET request
-      final response = await http.get(Uri.parse(url));
+  @override
+  State<StockDataRealTime> createState() => _StockDataRealTimeState();
+}
 
-      // If the request is successful
-      if (response.statusCode == 200) {
-        Map<String, dynamic> data = json.decode(response.body);
-        List<dynamic> result = data['quoteResponse']['result'];
-
-        if (result.isNotEmpty) {
-          // Parse stock data and add it to the list
-          stockList.add(Stock.fromJson(result[0], symbol));
+class _StockDataRealTimeState extends State<StockDataRealTime> {
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+        stream: fetchRealTimeStockData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(child: Text('No stock data available'));
+          }
+          // Access the data when it's available
+          if (snapshot.connectionState == ConnectionState.active) {
+            print('Received data: ${snapshot.data!}');
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              // Update ValueNotifier outside the build phase
+              stockNotifier.value = snapshot.data!;
+            });
+            // Now you can safely use the stocks list
+          }
+          return const SizedBox.shrink();
         }
-      } else {
-        throw Exception('Failed to load stock data');
-      }
-    }
-
-    return stockList;
-  } catch (e) {
-    print('Error fetching data: $e');
-    return [];
+        );
   }
-}
-
-void getStockData() async {
-  List<String> symbols = ['TCS.NS', 'GOLDBEES.BO']; // Example: NSE and BSE symbols
-  List<Stock> stocks = await fetchStockData(symbols);
-
-  // Print the stock data
-  for (Stock stock in stocks) {
-    print('Stock: ${stock.symbol}');
-    print('Price: ${stock.price}');
-    print('Price Change: ${stock.priceChange}');
-    print('Price Change Percentage: ${stock.priceChangePercentage}');
-    print('---');
-  }
-}
-
-void main() {
-  getStockData();  // Fetch stock data and print it
 }

@@ -7,6 +7,9 @@ import '../../FrontEnd/Components/navigation_bar.dart';
 import '../../FrontEnd/Pages/Forget_Password/forget_Password_Ui.dart';
 import '../../FrontEnd/Pages/HOME/Search_UI/search_ui.dart';
 import '../../FrontEnd/Pages/Login/login_Ui.dart';
+import '../../FrontEnd/Pages/Orders/orders.dart';
+import '../../FrontEnd/Pages/Portfolio/portfolio.dart';
+import '../../FrontEnd/Pages/Profile/profile.dart';
 import '../../FrontEnd/Pages/Register/OTP/otp.dart';
 import '../../FrontEnd/Pages/Register/register_Ui.dart';
 import 'package:kite/FrontEnd/Pages/HOME/home.dart';
@@ -18,13 +21,23 @@ class NavigationServices {
 
   static final Map<String, WidgetBuilder> routes = {
     '/': (context) => const Welcome(),
+
+    //Part of the login screen...
     '/login': (context) =>   const Login(),
     '/register': (context) =>  const Register(),
     '/forget_password': (context) =>  const ForgetPassword(),
-    '/home': (context) =>  const Home(),
+
+
     '/navigationbar_page': (context) =>  const Navigation_Bar(),
     // '/otp': (context) =>  Otp(verificationId: ModalRoute.of(context)!.settings.arguments as String),
     '/search': (context) =>  const SearchUi(),
+
+
+    //Main Screens ...
+    '/home': (context) =>  const Home(),
+    '/orders_page': (context) =>  const Orders(),
+    '/portfolio_page': (context) =>  const Portfolio(),
+    '/profile_page': (context) =>  const Profile(),
   };
 
   /// Navigate to a new route

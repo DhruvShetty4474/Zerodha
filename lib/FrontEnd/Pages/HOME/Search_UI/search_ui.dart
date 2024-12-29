@@ -151,22 +151,23 @@ class _SearchUiState extends State<SearchUi> {
             ///Temporary page need to make same as the search page..
             body: Column(
               children: [
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: favoritesStocks.length , // +1 for search bar
-                    itemBuilder: (context, index) {
-                        final stock = favoritesStocks[index ];
-                        return StockListItem(
-                          stockName: stock['name'],
-                          exchange: stock['exchange'],
-                          price: stock['price'],
-                          priceChange: stock['priceChange'],
-                          priceChangePercentage: stock['priceChangePercentage'],
-                          itemHeight: itemHeight,
-                        );
-                      }
-                  ),
-                ),
+                ///need to add a separate list for fav stock and search stock
+                // Expanded(
+                //   child: ListView.builder(
+                //     itemCount: favoritesStocks.length , // +1 for search bar
+                //     itemBuilder: (context, index) {
+                //         final stock = favoritesStocks[index ];
+                //         return StockListItem(
+                //           stockName: stock['name'],
+                //           exchange: stock['exchange'],
+                //           price: stock['price'],
+                //           priceChange: stock['priceChange'],
+                //           priceChangePercentage: stock['priceChangePercentage'],
+                //           itemHeight: itemHeight,
+                //         );
+                //       }
+                //   ),
+                // ),
               ],
             ),
           )),

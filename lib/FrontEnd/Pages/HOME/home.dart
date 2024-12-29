@@ -4,6 +4,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 
 import '../../../BackEnd/Models/home_model.dart';
 import '../../../BackEnd/Navigation/navigation.dart';
+import '../../../test/test_api.dart';
 import '../../Components/resuable_textfield.dart';
 import 'components.dart';
 import 'logic.dart';
@@ -22,6 +23,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with TickerProviderStateMixin {
   final ValueNotifier<int> _selectedIndex = ValueNotifier<int>(0);
+
 
   @override
   void dispose() {
@@ -150,126 +152,262 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           },
           body: Column(
             children: [
+              ///The commented code is the code tested for the list with manual data
+              ///and from firestore using future builder as well..
+              ///i tested this code with normal list view builder...and one using future builder..
+              // Expanded(
+              //   child: ListView.builder(
+              //     itemCount: stockData.length + 1, // +1 for search bar
+              //     itemBuilder: (context, index) {
+              //       if (index == 0) {
+              //         // Return the search bar widget as the first item
+              //         return Padding(
+              //           padding: const EdgeInsets.symmetric(
+              //               horizontal: 16, vertical: 12),
+              //           child: Container(
+              //             height: height * 0.065,
+              //             decoration: BoxDecoration(
+              //               color: Colors.grey[900],
+              //               borderRadius: BorderRadius.circular(5),
+              //             ),
+              //             child: Row(
+              //               mainAxisAlignment: MainAxisAlignment.start,
+              //               children: [
+              //                 // Expanded widget wraps the clickable area
+              //                 Expanded(
+              //                   child: GestureDetector(
+              //                     onTap: () {
+              //                       NavigationServices().navigateTo('/search');
+              //                       print('Search area clicked');
+              //                     },
+              //                     // Using Material for better touch feedback
+              //                     child: Material(
+              //                       color: Colors.transparent,
+              //                       child: Row(
+              //                         children: [
+              //                           SizedBox(
+              //                             width: width *
+              //                                 0.05,
+              //                           ),
+              //                           Icon(
+              //                             Iconsax.search_normal_14,
+              //                             color: Colors.grey[400],
+              //                             size: height *
+              //                                 0.0255,
+              //                           ),
+              //                           SizedBox(
+              //                             width: width *
+              //                                 0.05,
+              //                           ),
+              //                           Text(
+              //                             'Search & add',
+              //                             style: TextStyle(
+              //                               color: Colors.grey[400],
+              //                               fontSize: height *
+              //                                   0.020,
+              //                             ),
+              //                           ),
+              //                           // Spacer is now inside the clickable area
+              //                           const Spacer(),
+              //                         ],
+              //                       ),
+              //                     ),
+              //                   ),
+              //                 ),
+              //                 // Divider and IconButton remain separate
+              //                 VerticalDivider(
+              //                   color: Colors.grey[800],
+              //                   thickness: 1.0,
+              //                   indent: 15.0,
+              //                   endIndent: 15.0,
+              //                   width: 1.0,
+              //                 ),
+              //                 IconButton(
+              //                   onPressed: () {
+              //                     print('IconButton clicked');
+              //                   },
+              //                   icon: Icon(
+              //                     MdiIcons.tuneVertical,
+              //                     color: Colors.white,
+              //                     size: height *
+              //                         0.0255,
+              //                   ),
+              //                 ),
+              //               ],
+              //             ),
+              //           ),
+              //         );
+              //       } else {
+              //         // Return the list items...
+              //         ///Need to show a widget from below when list item is clicked...
+              //         ///every item has its own widget eg when clicked it should change the info
+              //         ///accordingly....
+              //         // return Column(
+              //         //   children: [
+              //         //     SizedBox(
+              //         //       height: _height /
+              //         //           9.28, // Exactly 6 items fit the screen
+              //         //       child: ListTile(
+              //         //         title: Text(
+              //         //           'SENSEX ${index - 1}', // Subtract 1 because the header takes index 0
+              //         //           style: const TextStyle(color: Colors.white),
+              //         //         ),
+              //         //       ),
+              //         //     ),
+              //         //     Divider(
+              //         //       height: 1,
+              //         //       thickness: 3,
+              //         //       color: Colors.grey[900],
+              //         //       // color: Colors.white,
+              //         //     ),
+              //         //   ],
+              //         // );
+              //         // final stock = stockData[index - 1];
+              //         // return StockListItem(
+              //         //   stockName: stock['name'],
+              //         //   exchange: stock['exchange'],
+              //         //   price: stock['price'],
+              //         //   priceChange: stock['priceChange'],
+              //         //   priceChangePercentage: stock['priceChangePercentage'],
+              //         //   itemHeight: itemHeight,
+              //         // );
+              //
+              //       }
+              //     },
+              //   ),
+              // ),
+
+              // Expanded(
+              //   child: StockDataProvider(
+              //     onDataReady: (List<Stock> stocks) {
+              //       setState(() {
+              //         FirebaseStockData = stocks;
+              //       });
+              //     },
+              //   ),
+              // ),
+              // Expanded(
+              //   child: ListView.builder(
+              //     itemCount: FirebaseStockData.length,
+              //     itemBuilder: (context, index) {
+              //       final stock = FirebaseStockData[index];
+              //       return StockListItem(
+              //         stockName: stock.name,
+              //         exchange: stock.exchange,
+              //         price: stock.price,
+              //         priceChange: stock.priceChange,
+              //         priceChangePercentage: stock.priceChangePercentage,
+              //         itemHeight: 80.0,
+              //       );
+              //     },
+              //   ),
+              // ),
+              StockDataRealTime(),
               Expanded(
-                child: ListView.builder(
-                  itemCount: favoritesStocks.length + 1, // +1 for search bar
-                  itemBuilder: (context, index) {
-                    if (index == 0) {
-                      // Return the search bar widget as the first item
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 12),
-                        child: Container(
-                          height: height * 0.065,
-                          decoration: BoxDecoration(
-                            color: Colors.grey[900],
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              // Expanded widget wraps the clickable area
-                              Expanded(
-                                child: GestureDetector(
-                                  onTap: () {
-                                    NavigationServices().navigateTo('/search');
-                                    print('Search area clicked');
-                                  },
-                                  // Using Material for better touch feedback
-                                  child: Material(
-                                    color: Colors.transparent,
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: width *
-                                              0.05,
-                                        ),
-                                        Icon(
-                                          Iconsax.search_normal_14,
-                                          color: Colors.grey[400],
-                                          size: height *
-                                              0.0255,
-                                        ),
-                                        SizedBox(
-                                          width: width *
-                                              0.05,
-                                        ),
-                                        Text(
-                                          'Search & add',
-                                          style: TextStyle(
-                                            color: Colors.grey[400],
-                                            fontSize: height *
-                                                0.020,
+                child: ValueListenableBuilder<List<Stock>>(
+                    valueListenable: stockNotifier,
+                    builder: (context, values, _) {
+                      return ListView.builder(
+                        itemCount: values.length + 1,
+                        itemBuilder: (context, index) {
+                          if (index == 0) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 12),
+                              child: Container(
+                                height: height * 0.065,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[900],
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    // Expanded widget wraps the clickable area
+                                    Expanded(
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          NavigationServices().navigateTo('/search');
+                                          print('Search area clicked');
+                                        },
+                                        // Using Material for better touch feedback
+                                        child: Material(
+                                          color: Colors.transparent,
+                                          child: Row(
+                                            children: [
+                                              SizedBox(
+                                                width: width *
+                                                    0.05,
+                                              ),
+                                              Icon(
+                                                Iconsax.search_normal_14,
+                                                color: Colors.grey[400],
+                                                size: height *
+                                                    0.0255,
+                                              ),
+                                              SizedBox(
+                                                width: width *
+                                                    0.05,
+                                              ),
+                                              Text(
+                                                'Search & add',
+                                                style: TextStyle(
+                                                  color: Colors.grey[400],
+                                                  fontSize: height *
+                                                      0.020,
+                                                ),
+                                              ),
+                                              // Spacer is now inside the clickable area
+                                              const Spacer(),
+                                            ],
                                           ),
                                         ),
-                                        // Spacer is now inside the clickable area
-                                        const Spacer(),
-                                      ],
+                                      ),
                                     ),
-                                  ),
+                                    // Divider and IconButton remain separate
+                                    VerticalDivider(
+                                      color: Colors.grey[800],
+                                      thickness: 1.0,
+                                      indent: 15.0,
+                                      endIndent: 15.0,
+                                      width: 1.0,
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        print('IconButton clicked');
+                                      },
+                                      icon: Icon(
+                                        MdiIcons.tuneVertical,
+                                        color: Colors.white,
+                                        size: height *
+                                            0.0255,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              // Divider and IconButton remain separate
-                              VerticalDivider(
-                                color: Colors.grey[800],
-                                thickness: 1.0,
-                                indent: 15.0,
-                                endIndent: 15.0,
-                                width: 1.0,
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  print('IconButton clicked');
-                                },
-                                icon: Icon(
-                                  MdiIcons.tuneVertical,
-                                  color: Colors.white,
-                                  size: height *
-                                      0.0255,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                            );
+                          }
+                          else{
+                            final stock = values[index - 1];
+                            return StockListItem(
+                              stockName: stock.name,
+                              exchange: stock.exchange,
+                              price: stock.price,
+                              priceChange: stock.priceChange,
+                              priceChangePercentage: stock.priceChangePercentage,
+                              itemHeight: 80.0,
+                            );
+                          }
+                        },
+
                       );
-                    } else {
-                      // Return the list items...
-                      ///Need to show a widget from below when list item is clicked...
-                      ///every item has its own widget eg when clicked it should change the info
-                      ///accordingly....
-                      // return Column(
-                      //   children: [
-                      //     SizedBox(
-                      //       height: _height /
-                      //           9.28, // Exactly 6 items fit the screen
-                      //       child: ListTile(
-                      //         title: Text(
-                      //           'SENSEX ${index - 1}', // Subtract 1 because the header takes index 0
-                      //           style: const TextStyle(color: Colors.white),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //     Divider(
-                      //       height: 1,
-                      //       thickness: 3,
-                      //       color: Colors.grey[900],
-                      //       // color: Colors.white,
-                      //     ),
-                      //   ],
-                      // );
-                      final stock = favoritesStocks[index - 1];
-                      return StockListItem(
-                        stockName: stock['name'],
-                        exchange: stock['exchange'],
-                        price: stock['price'],
-                        priceChange: stock['priceChange'],
-                        priceChangePercentage: stock['priceChangePercentage'],
-                        itemHeight: itemHeight,
-                      );
+
                     }
-                  },
                 ),
               ),
+
+
             ],
           ),
         ),

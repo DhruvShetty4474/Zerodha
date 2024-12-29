@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:kite/test/test_api.dart';
 
 import 'BackEnd/Navigation/navigation.dart';
 import 'FrontEnd/Pages/Welcome/Welcome.dart';
@@ -20,14 +21,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'kite',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
       navigatorKey: NavigationServices.navigatorKey, // Set the global navigator key
       routes: NavigationServices.routes, // Set the global routes
-      initialRoute: '/navigationbar_page', // Set the initial route
+      initialRoute: '/', // Set the initial route
     );
   }
 }
